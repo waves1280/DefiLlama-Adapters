@@ -1,4 +1,14 @@
 module.exports = {
+  ethereum: {
+    tvl: async (_, _1, _2, { api }) => {
+      const totalSupply = await api.call({ target: '0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b', abi: 'uint256:totalSupply'});
+      const rate = await api.call({ target: '0x4c48bcb2160F8e0aDbf9D4F3B034f1e36d1f8b3e', abi: 'function latestRoundData() external view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)'});
+
+      return {
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": (totalSupply * rate.answer)/1e8
+      };
+    }
+  },
   canto: {
     tvl: async (_, _1, _2, { api }) => {
       const totalSupply = await api.call({ target: '0xfb8255f0de21acebf490f1df6f0bdd48cc1df03b', abi: 'uint256:totalSupply'});
